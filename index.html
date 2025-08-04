@@ -2,24 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>System Critical Alert</title>
+  <title>System Virus Alert</title>
   <style>
     body {
       background-color: black;
       color: lime;
       font-family: monospace;
-      font-size: 1.5em;
+      font-size: 1.2em;
       padding: 2rem;
-      overflow: hidden;
-      animation: shake 0.1s infinite;
-    }
-
-    @keyframes shake {
-      0% { transform: translate(1px, 1px); }
-      25% { transform: translate(-2px, -2px); }
-      50% { transform: translate(2px, -2px); }
-      75% { transform: translate(-1px, 2px); }
-      100% { transform: translate(1px, 1px); }
     }
 
     .console {
@@ -36,61 +26,67 @@
       color: red;
       font-size: 1.8em;
       text-align: center;
-      margin-top: 1rem;
-      animation: blink 0.5s infinite;
+      margin-bottom: 1rem;
+      animation: blink 0.7s infinite;
     }
 
     @keyframes blink {
       0% { opacity: 1; }
-      50% { opacity: 0; }
+      50% { opacity: 0.3; }
       100% { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <div class="warning">⚠️ SYSTEM ALERT: Unauthorized Activity Detected! ⚠️</div>
+  <div class="warning">⚠️ SYSTEM ALERT: Virus Download in Progress ⚠️</div>
   <div class="console" id="console"></div>
 
+  <!-- เสียง -->
   <audio id="siren" autoplay loop>
-    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
-    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/mpeg">
+    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
+    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/mpeg">
   </audio>
 
   <script>
     const consoleEl = document.getElementById("console");
     const fakeMessages = [
-      "[!] Injecting trojan module...",
-      "[!] Downloading spyware package (20MB)...",
-      "[!] Disabling antivirus...",
-      "[!] Accessing private files...",
-      "[!] Encrypting Documents...",
-      "[!] Uploading user data to external server...",
-      "[!] Sending data to h4ck3r.net...",
-      "[!] Removing system protections...",
+      "[!] Connecting to darkweb server...",
+      "[!] Injecting Trojan...",
+      "[!] Downloading malware package...",
       "[!] Installing keylogger...",
-      "[!] WARNING: FILE SYSTEM OVERRIDE",
-      "[!] ERROR: Cannot rollback",
-      "[!] SYSTEM SHUTDOWN INITIATED...",
+      "[!] Uploading documents...",
+      "[!] Disabling antivirus...",
+      "[!] Inject complete.",
     ];
 
     let i = 0;
     function showNextLine() {
       if (i < fakeMessages.length) {
-        const line = fakeMessages[i++];
-        consoleEl.innerText += line + "\n";
-        setTimeout(showNextLine, 500 + Math.random() * 300);
+        consoleEl.innerText += fakeMessages[i++] + "\n";
+        setTimeout(showNextLine, 500);
       } else {
-        setTimeout(() => {
-          consoleEl.innerText += "\n[✔] SYSTEM BREACH SUCCESSFUL.";
-        }, 1000);
+        triggerPopups();
       }
+    }
+
+    function triggerPopups() {
+      let count = 0;
+      const popupLimit = 10;
+
+      const interval = setInterval(() => {
+        alert("⚠️ SYSTEM ERROR: UNAUTHORIZED ACCESS DETECTED!");
+        count++;
+        if (count >= popupLimit) {
+          clearInterval(interval);
+        }
+      }, 800);
     }
 
     window.onload = function () {
       const audio = document.getElementById("siren");
-      audio.play().catch(() => {}); // สำหรับ browser ที่บล็อก autoplay
+      audio.play().catch(() => {}); // บาง browser ต้องให้คลิกก่อนถึงเล่น
       showNextLine();
-    }
+    };
   </script>
 </body>
 </html>
