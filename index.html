@@ -13,6 +13,15 @@
       animation: flicker 0.5s infinite;
       overflow: hidden;
       user-select: none;
+
+      <audio id="siren" src="https://freesound.org/data/previews/250/250629_4486188-lq.mp3"></audio>
+
+<script>
+  document.body.addEventListener('click', () => {
+    const audio = document.getElementById('siren');
+    audio.play();
+  }, { once: true }); // เล่นครั้งเดียว
+</script>
     }
 
     @keyframes flicker {
