@@ -14,9 +14,9 @@
     .console {
       white-space: pre-wrap;
       overflow-y: auto;
-      height: 80vh;
+      height: 60vh; /* ลดความสูง */
       background: black;
-      border: 1px solid red;
+      border: 0.5px solid red;
       padding: 1rem;
       box-shadow: 0 0 10px red;
     }
@@ -35,10 +35,24 @@
   </style>
 </head>
 <body>
-  <div class="warning">⚠️ SYSTEM ALERT: Virus Download in Progress ⚠️</div>
+  <div class="warning" id="warning">⚠️ SYSTEM ALERT: Virus Download in Progress ⚠️</div>
   <div class="console" id="console"></div>
 
-  <audio id="siren" src="https://bawonthad.github.io/virus/sound-effect-system-error-sound-117733.mp3"></audio>
+  <audio id="siren" src="https://bawonthad.github.io/virus/sound-effect-system-error-sound-117733.mp3" muted autoplay loop></audio>
+
+  <div id="popup-container" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgb(255, 0, 0); padding: 20px; border-radius: 5px; text-align: center; color: rgb(255, 255, 255); animation: blink 1s linear infinite;">
+      ⚠️Your device is infected with a virus!!!⚠️
+    </div>
+  </div>
+
+  <style>
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  </style>
 
   <script>
     const consoleEl = document.getElementById("console");
@@ -66,25 +80,25 @@
       let count = 0;
       const popupLimit = 10;
       const audio = document.getElementById("siren");
+      audio.volume = 1.0;
+      audio.muted = false; // เปิดเสียงเมื่อ Popup ขึ้น
+      audio.loop = true;
+      audio.play();
 
-      function playLoopingSound() {
-        audio.currentTime = 0;
-        audio.play().catch(() => {});
-        audio.onended = () => {
-          playLoopingSound();
-        };
-      }
-
-      const interval = setInterval(() => {
-        alert("⚠️ SYSTEM ERROR: UNAUTHORIZED ACCESS DETECTED!");
+      const showPopup = () => {
+        const popupContainer = document.getElementById('popup-container');
+        popupContainer.style.display = 'block';
         count++;
         if (count >= popupLimit) {
-          clearInterval(interval);
+          count = 0;
         }
-        if (count === 1) {
-          playLoopingSound();
-        }
-      }, 800);
+      };
+
+      showPopup(); // Show the popup immediately
+
+      const interval = setInterval(() => {
+        showPopup(); // Show the popup every 2 seconds
+      }, 2000);
     }
 
     window.onload = function () {
