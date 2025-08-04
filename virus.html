@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>System Virus Alert</title>
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      font-size: 1.2em;
+      padding: 2rem;
+    }
+    .console {
+      white-space: pre-wrap;
+      overflow-y: auto;
+      height: 80vh;
+      background: black;
+      border: 1px solid red;
+      padding: 1rem;
+      box-shadow: 0 0 10px red;
+    }
+    .warning {
+      color: red;
+      font-size: 1.8em;
+      text-align: center;
+      margin-bottom: 1rem;
+      animation: blink 0.7s infinite;
+    }
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="warning">⚠️ SYSTEM ALERT: Virus Download in Progress ⚠️</div>
+  <div class="console" id="console"></div>
+
+  <audio id="siren" src="https://bawonthad.github.io/virus/sound-effect-system-error-sound-117733.mp3"></audio>
+
+  <script>
+    const consoleEl = document.getElementById("console");
+    const fakeMessages = [
+      "[!] Connecting to server...",
+      "[!] Injecting Trojan module...",
+      "[!] Downloading virus (32.4MB)...",
+      "[!] Installing backdoor...",
+      "[!] Disabling antivirus...",
+      "[!] Uploading personal data...",
+      "[!] Injection complete.",
+    ];
+
+    let i = 0;
+    function showNextLine() {
+      if (i < fakeMessages.length) {
+        consoleEl.innerText += fakeMessages[i++] + "\n";
+        setTimeout(showNextLine, 500);
+      } else {
+        triggerPopups();
+      }
+    }
+
+    function triggerPopups() {
+      let count = 0;
+      const popupLimit = 10;
+      const audio = document.getElementById("siren");
+
+      function playLoopingSound() {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+        audio.onended = () => {
+          playLoopingSound();
+        };
+      }
+
+      const interval = setInterval(() => {
+        alert("⚠️ SYSTEM ERROR: UNAUTHORIZED ACCESS DETECTED!");
+        count++;
+        if (count >= popupLimit) {
+          clearInterval(interval);
+        }
+        if (count === 1) {
+          playLoopingSound();
+        }
+      }, 800);
+    }
+
+    window.onload = function () {
+      showNextLine();
+    };
+  </script>
+</body>
+</html>
