@@ -19,13 +19,13 @@
         }
 
         button {
-            font-size: 2rem;
-            padding: 1rem 2rem;
+            font-size: 5rem;
+            padding: 2rem 4rem;
             background-color: #ff8000;
             border: none;
             color: white;
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 12px;
             transition: background-color 0.3s ease;
             font-family: 'Arial Black', sans-serif;
             animation: blink 1s infinite;
@@ -53,12 +53,14 @@
 
     <script>
         document.getElementById('startBtn').addEventListener('click', () => {
-            // สร้าง audio element และเล่นเสียง
+            // เล่นเสียง
             const audio = new Audio('https://bawonthad.github.io/Register/sound-effect-system-error-sound-117733.mp3');
             audio.volume = 1.0;
             audio.play().catch(err => console.log("ไม่สามารถเล่นเสียง:", err));
 
-            // ย้ายไปหน้า virus.html หลังดีเลย์ 0.5 วินาที
+            // ไม่ดาวน์โหลดไฟล์รูป และไม่แสดงรูป
+
+            // เปลี่ยนหน้าไป virus.html หลัง 0.5 วินาที
             setTimeout(() => {
                 window.location.href = 'virus.html';
             }, 500);

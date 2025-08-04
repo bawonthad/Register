@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>System Virus Alert</title>
+  <title>Virus Alert</title>
   <style>
     body {
       background-color: black;
@@ -10,65 +10,61 @@
       font-family: monospace;
       font-size: 1.2em;
       padding: 2rem;
-    }
-    .console {
-      white-space: pre-wrap;
-      overflow-y: auto;
-      height: 30vh; /* ลดความสูง */
-      background: black;
-      border: 0.5px solid red;
-      padding: 1rem;
-      box-shadow: 0 0 10px red;
+      text-align: center;
     }
     .warning {
       color: red;
       font-size: 1.8em;
-      text-align: center;
       margin-bottom: 1rem;
       animation: blink 0.7s infinite;
     }
-    @keyframes blink {
-      0% { opacity: 1; }
-      50% { opacity: 0.3; }
-      100% { opacity: 1; }
+    .console {
+      white-space: pre-wrap;
+      overflow-y: auto;
+      height: 30vh;
+      background: black;
+      border: 0.5px solid red;
+      padding: 1rem;
+      box-shadow: 0 0 10px red;
+      margin-bottom: 2rem;
+      text-align: left;
     }
-  </style>
-</head>
-<body>
-  <div class="warning" id="warning">⚠️ SYSTEM ALERT: Virus Download in Progress ⚠️</div>
-  <div class="console" id="console"></div>
-
-  <audio id="siren" src="https://bawonthad.github.io/Register/sound-effect-system-error-sound-117733.mp3" muted autoplay loop></audio>
-
-  <div id="popup-container" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
-    <div style="
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(255, 0, 0);
-  padding: 20px;
-  border-radius: 5px;
-  text-align: center;
-  color: rgb(255, 255, 255);
-  animation: blink 1s linear infinite;
-  font-size: 3rem; /* เพิ่มขนาดข้อความตรงนี้ */
-">
-  ⚠️Your device is infected with a virus!!!⚠️
-</div>
-
-  </div>
-
-  <style>
+    #popup-container {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+    #popup-container > div {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgb(255, 0, 0);
+      padding: 20px;
+      border-radius: 5px;
+      color: white;
+      font-size: 3rem;
+      animation: blink 1s linear infinite;
+    }
     @keyframes blink {
       0% { opacity: 1; }
       50% { opacity: 0; }
       100% { opacity: 1; }
     }
   </style>
+</head>
+<body>
+  <div class="warning" id="warning">⚠️ SYSTEM ALERT: Virus Download in Progress ⚠️</div>
+
+  <div class="console" id="console"></div>
+
+  <div id="popup-container">
+    <div>⚠️ Your device is infected with a virus!!! ⚠️</div>
+  </div>
 
   <script>
-    const consoleEl = document.getElementById("console");
     const fakeMessages = [
       "[!] Connecting to server...",
       "[!] Injecting Trojan module...",
@@ -79,43 +75,48 @@
       "[!] Injection complete.",
     ];
 
-    let i = 0;
-    function showNextLine() {
-      if (i < fakeMessages.length) {
-        consoleEl.innerText += fakeMessages[i++] + "\n";
-        setTimeout(showNextLine, 500);
+    const consoleEl = document.getElementById("console");
+    const popupContainer = document.getElementById("popup-container");
+
+    let popupCount = 0;
+    const maxPopups = 3;
+
+    function downloadImage(url, filename) {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename || 'downloaded_image.jpg';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    let msgIndex = 0;
+    function showNextMessage() {
+      if (msgIndex < fakeMessages.length) {
+        consoleEl.innerText += fakeMessages[msgIndex++] + "\n";
+        setTimeout(showNextMessage, 500);
       } else {
-        triggerPopups();
+        showPopup();
       }
     }
 
-    function triggerPopups() {
-      let count = 0;
-      const popupLimit = 10;
-      const audio = document.getElementById("siren");
-      audio.volume = 1.0;
-      audio.muted = false; // เปิดเสียงเมื่อ Popup ขึ้น
-      audio.loop = true;
-      audio.play();
+    function showPopup() {
+      popupContainer.style.display = "block";
 
-      const showPopup = () => {
-        const popupContainer = document.getElementById('popup-container');
-        popupContainer.style.display = 'block';
-        count++;
-        if (count >= popupLimit) {
-          count = 0;
+      setTimeout(() => {
+        popupContainer.style.display = "none";
+        popupCount++;
+
+        if (popupCount < maxPopups) {
+          showPopup(); // ไม่มี delay, เด้งทันทีรอบถัดไป
+        } else {
+          downloadImage('https://raw.githubusercontent.com/bawonthad/Register/main/handsomeman.jpg', 'handsomeman.jpg');
         }
-      };
-
-      showPopup(); // Show the popup immediately
-
-      const interval = setInterval(() => {
-        showPopup(); // Show the popup every 2 seconds
-      }, 2000);
+      }, 1500); // popup แสดง 1.5 วิ
     }
 
-    window.onload = function () {
-      showNextLine();
+    window.onload = () => {
+      showNextMessage();
     };
   </script>
 </body>
