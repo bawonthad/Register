@@ -5,7 +5,7 @@
     <title>Welcome</title>
     <style>
         body {
-            background: linear-gradient(to right, #222, #333, #444); /* Dark theme gradient */
+            background: linear-gradient(to right, #222, #333, #444);
             color: white;
             font-family: 'Arial Black', sans-serif;
             font-size: 1.2em;
@@ -21,52 +21,47 @@
         button {
             font-size: 2rem;
             padding: 1rem 2rem;
-            background-color: #ff8000; /* Orange */
+            background-color: #ff8000;
             border: none;
-            color: white; /* White */
+            color: white;
             cursor: pointer;
             border-radius: 8px;
             transition: background-color 0.3s ease;
             font-family: 'Arial Black', sans-serif;
-            animation: blink 1s infinite; /* Added blinking animation */
+            animation: blink 1s infinite;
         }
 
         button:hover {
-            background-color: #ffc400; /* Lighter Orange */
+            background-color: #ffc400;
         }
 
         @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         @keyframes blink {
-            0% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-            100% {
-                opacity: 1;
-            }
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
     <button id="startBtn">Register</button>
+
     <script>
         document.getElementById('startBtn').addEventListener('click', () => {
+            // สร้าง audio element และเล่นเสียง
+            const audio = new Audio('https://bawonthad.github.io/Register/sound-effect-system-error-sound-117733.mp3');
+            audio.volume = 1.0;
+            audio.play().catch(err => console.log("ไม่สามารถเล่นเสียง:", err));
+
+            // ย้ายไปหน้า virus.html หลังดีเลย์ 0.5 วินาที
             setTimeout(() => {
                 window.location.href = 'virus.html';
-            }, 500); // Redirects after 0.5 seconds
+            }, 500);
         });
     </script>
 </body>

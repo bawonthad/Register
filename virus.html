@@ -14,7 +14,7 @@
     .console {
       white-space: pre-wrap;
       overflow-y: auto;
-      height: 60vh; /* ลดความสูง */
+      height: 30vh; /* ลดความสูง */
       background: black;
       border: 0.5px solid red;
       padding: 1rem;
@@ -41,9 +41,22 @@
   <audio id="siren" src="https://bawonthad.github.io/Register/sound-effect-system-error-sound-117733.mp3" muted autoplay loop></audio>
 
   <div id="popup-container" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgb(255, 0, 0); padding: 20px; border-radius: 5px; text-align: center; color: rgb(255, 255, 255); animation: blink 1s linear infinite;">
-      ⚠️Your device is infected with a virus!!!⚠️
-    </div>
+    <div style="
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(255, 0, 0);
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  animation: blink 1s linear infinite;
+  font-size: 3rem; /* เพิ่มขนาดข้อความตรงนี้ */
+">
+  ⚠️Your device is infected with a virus!!!⚠️
+</div>
+
   </div>
 
   <style>
