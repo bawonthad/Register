@@ -1,28 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>ระบบเตือนภัยปลอม</title>
+  <meta charset="UTF-8">
+  <title>System Critical Alert</title>
   <style>
     body {
       background-color: black;
-      color: red;
+      color: lime;
       font-family: monospace;
+      font-size: 1.5em;
+      padding: 2rem;
+      overflow: hidden;
+      animation: shake 0.1s infinite;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(1px, 1px); }
+      25% { transform: translate(-2px, -2px); }
+      50% { transform: translate(2px, -2px); }
+      75% { transform: translate(-1px, 2px); }
+      100% { transform: translate(1px, 1px); }
+    }
+
+    .console {
+      white-space: pre-wrap;
+      overflow-y: auto;
+      height: 80vh;
+      background: black;
+      border: 1px solid red;
+      padding: 1rem;
+      box-shadow: 0 0 10px red;
+    }
+
+    .warning {
+      color: red;
+      font-size: 1.8em;
       text-align: center;
-      padding-top: 20vh;
-      font-size: 2em;
+      margin-top: 1rem;
+      animation: blink 0.5s infinite;
+    }
+
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <p>คลิกที่หน้าจอเพื่อเริ่มระบบเตือนภัย!</p>
+  <div class="warning">⚠️ SYSTEM ALERT: Unauthorized Activity Detected! ⚠️</div>
+  <div class="console" id="console"></div>
 
-  <audio id="siren" src="https://freesound.org/data/previews/250/250629_4486188-lq.mp3" loop></audio>
+  <audio id="siren" autoplay loop>
+    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/mpeg">
+  </audio>
 
   <script>
-    document.body.addEventListener('click', () => {
-      const audio = document.getElementById('siren');
-      audio.play();
-    }, { once: true });
+    const consoleEl = document.getElementById("console");
+    const fakeMessages = [
+      "[!] Injecting trojan module...",
+      "[!] Downloading spyware package (20MB)...",
+      "[!] Disabling antivirus...",
+      "[!] Accessing private files...",
+      "[!] Encrypting Documents...",
+      "[!] Uploading user data to external server...",
+      "[!] Sending data to h4ck3r.net...",
+      "[!] Removing system protections...",
+      "[!] Installing keylogger...",
+      "[!] WARNING: FILE SYSTEM OVERRIDE",
+      "[!] ERROR: Cannot rollback",
+      "[!] SYSTEM SHUTDOWN INITIATED...",
+    ];
+
+    let i = 0;
+    function showNextLine() {
+      if (i < fakeMessages.length) {
+        const line = fakeMessages[i++];
+        consoleEl.innerText += line + "\n";
+        setTimeout(showNextLine, 500 + Math.random() * 300);
+      } else {
+        setTimeout(() => {
+          consoleEl.innerText += "\n[✔] SYSTEM BREACH SUCCESSFUL.";
+        }, 1000);
+      }
+    }
+
+    window.onload = function () {
+      const audio = document.getElementById("siren");
+      audio.play().catch(() => {}); // สำหรับ browser ที่บล็อก autoplay
+      showNextLine();
+    }
   </script>
 </body>
 </html>
