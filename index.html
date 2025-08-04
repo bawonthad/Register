@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>System Virus Alert</title>
+  <title>Virus Alert</title>
   <style>
     body {
       background-color: black;
@@ -11,25 +11,12 @@
       font-size: 1.2em;
       padding: 2rem;
     }
-
-    .console {
-      white-space: pre-wrap;
-      overflow-y: auto;
-      height: 80vh;
-      background: black;
-      border: 1px solid red;
-      padding: 1rem;
-      box-shadow: 0 0 10px red;
-    }
-
     .warning {
       color: red;
-      font-size: 1.8em;
+      font-size: 2em;
       text-align: center;
-      margin-bottom: 1rem;
       animation: blink 0.7s infinite;
     }
-
     @keyframes blink {
       0% { opacity: 1; }
       50% { opacity: 0.3; }
@@ -38,60 +25,31 @@
   </style>
 </head>
 <body>
-  <div class="warning">⚠️ SYSTEM ALERT: Virus Download in Progress ⚠️</div>
-  <div class="console" id="console"></div>
+  <div class="warning">⚠️ SYSTEM WARNING ⚠️</div>
+  <p>กำลังตรวจพบกิจกรรมต้องสงสัย...</p>
 
-  <!-- เสียงจาก GitHub ของคุณ -->
-  <audio id="siren" autoplay loop>
-    <source src="https://bawonthad.github.io/virus/sound-effect-system-error-sound-117733.mp3" type="audio/mpeg">
-  </audio>
+  <!-- ใส่เสียงของคุณ -->
+  <audio id="sfx" src="sound-effect-system-error-sound-117733.mp3"></audio>
 
   <script>
-    const consoleEl = document.getElementById("console");
-    const fakeMessages = [
-      "[!] Connecting to server...",
-      "[!] Injecting Trojan module...",
-      "[!] Downloading virus (32.4MB)...",
-      "[!] Installing backdoor...",
-      "[!] Disabling antivirus...",
-      "[!] Uploading personal data...",
-      "[!] Injection complete.",
-    ];
-
-    let i = 0;
-    function showNextLine() {
-      if (i < fakeMessages.length) {
-        consoleEl.innerText += fakeMessages[i++] + "\n";
-        setTimeout(showNextLine, 500);
-      } else {
-        triggerPopups();
-      }
-    }
-
-    function triggerPopups() {
-      let count = 0;
-      const popupLimit = 10;
-      const interval = setInterval(() => {
-        alert("⚠️ SYSTEM ERROR: UNAUTHORIZED ACCESS DETECTED!");
-        count++;
-        if (count >= popupLimit) {
-          clearInterval(interval);
-        }
-      }, 800);
-    }
-
     window.onload = function () {
-      const audio = document.getElementById("siren");
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // ถ้า autoplay ถูกบล็อก จะรอคลิกแล้วค่อยเล่น
-          document.body.addEventListener('click', () => {
-            audio.play();
-          }, { once: true });
-        });
-      }
-      showNextLine();
+      setTimeout(() => {
+        alert("⚠️ SYSTEM ALERT: MALWARE DETECTED! Press OK to continue...");
+        
+        // เมื่อกด OK แล้วเริ่มเล่นเสียงรัว
+        const sfx = document.getElementById("sfx");
+
+        function playLoopingSound() {
+          // เล่นเสียง แล้วเมื่อจบ ให้เล่นใหม่เรื่อยๆ
+          sfx.currentTime = 0;
+          sfx.play().catch(() => {});
+          sfx.onended = () => {
+            playLoopingSound();
+          };
+        }
+
+        playLoopingSound();
+      }, 1500);
     };
   </script>
 </body>
