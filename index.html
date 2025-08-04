@@ -41,22 +41,21 @@
   <div class="warning">⚠️ SYSTEM ALERT: Virus Download in Progress ⚠️</div>
   <div class="console" id="console"></div>
 
-  <!-- เสียง -->
+  <!-- เสียงจาก GitHub ของคุณ -->
   <audio id="siren" autoplay loop>
-    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
-    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/mpeg">
+    <source src="https://raw.githubusercontent.com/bawonthad/virus/main/sound-effect-system-error-sound-117733.mp3" type="audio/mpeg">
   </audio>
 
   <script>
     const consoleEl = document.getElementById("console");
     const fakeMessages = [
-      "[!] Connecting to darkweb server...",
-      "[!] Injecting Trojan...",
-      "[!] Downloading malware package...",
-      "[!] Installing keylogger...",
-      "[!] Uploading documents...",
+      "[!] Connecting to server...",
+      "[!] Injecting Trojan module...",
+      "[!] Downloading virus (32.4MB)...",
+      "[!] Installing backdoor...",
       "[!] Disabling antivirus...",
-      "[!] Inject complete.",
+      "[!] Uploading personal data...",
+      "[!] Injection complete.",
     ];
 
     let i = 0;
@@ -72,7 +71,6 @@
     function triggerPopups() {
       let count = 0;
       const popupLimit = 10;
-
       const interval = setInterval(() => {
         alert("⚠️ SYSTEM ERROR: UNAUTHORIZED ACCESS DETECTED!");
         count++;
@@ -84,7 +82,15 @@
 
     window.onload = function () {
       const audio = document.getElementById("siren");
-      audio.play().catch(() => {}); // บาง browser ต้องให้คลิกก่อนถึงเล่น
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // ถ้า autoplay ถูกบล็อก จะรอคลิกแล้วค่อยเล่น
+          document.body.addEventListener('click', () => {
+            audio.play();
+          }, { once: true });
+        });
+      }
       showNextLine();
     };
   </script>
