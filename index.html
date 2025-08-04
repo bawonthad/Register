@@ -1,20 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ว่าแล้ว!</title>
+  <title>System Critical Error</title>
   <style>
     body {
-      background-color: #ffde59;
+      background-color: black;
+      color: red;
+      font-family: 'Courier New', monospace;
+      font-size: 2em;
       text-align: center;
-      font-family: 'Arial', sans-serif;
-      margin-top: 20%;
-      font-size: 3em;
-      color: #333;
+      padding-top: 20vh;
+      animation: flicker 0.5s infinite;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
+    .alert {
+      position: fixed;
+      top: 20%;
+      left: 0;
+      right: 0;
+      margin: auto;
+      background-color: darkred;
+      color: white;
+      padding: 20px;
+      border: 3px solid red;
+      font-size: 1.2em;
+      width: 60%;
+      box-shadow: 0 0 20px red;
+      z-index: 9999;
+      animation: shake 0.1s infinite;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(1px, 1px); }
+      25% { transform: translate(-1px, -1px); }
+      50% { transform: translate(1px, -1px); }
+      75% { transform: translate(-1px, 1px); }
+      100% { transform: translate(1px, 1px); }
     }
   </style>
 </head>
-<body>
-  🤭<br>
-  ว่าแล้ว ว่าต้องเปิด!
+<body oncontextmenu="return false" onkeydown="return false" onmousedown="return false">
+  🔥 CRITICAL SYSTEM ERROR 🔥<br><br>
+  ❗ Unauthorized access detected.<br>
+  ❗ Data breach in progress...<br>
+  ❗ Encrypting all files...<br>
+
+  <div id="alert" class="alert" style="display: none;">
+    ☠ WARNING: SYSTEM FAILURE IN 10 SECONDS ☠
+  </div>
+
+  <audio id="siren" autoplay loop>
+    <source src="https://freesound.org/data/previews/250/250629_4486188-lq.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // เตือน popup หลอก
+    function triggerFakePopups() {
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          alert("⚠️ SYSTEM ALERT: Unauthorized operation detected!");
+        }, i * 800);
+      }
+    }
+
+    // เตือน alert แบบหน้าจอสั่น
+    setTimeout(() => {
+      document.getElementById("alert").style.display = "block";
+    }, 5000);
+
+    // เปิด popup หลังผ่านไป 7 วินาที
+    setTimeout(() => {
+      triggerFakePopups();
+    }, 7000);
+
+    // ล็อก fullscreen ปลอม
+    document.body.addEventListener('click', () => {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      }
+    });
+  </script>
 </body>
 </html>
