@@ -19,7 +19,7 @@
         }
 
         button {
-            font-size: 5rem;
+            font-size: 6rem; /* ปรับขนาดข้อความ */
             padding: 2rem 4rem;
             background-color: #ff8000;
             border: none;
@@ -53,12 +53,7 @@
 
     <script>
         document.getElementById('startBtn').addEventListener('click', () => {
-            // เล่นเสียง
-            const audio = new Audio('https://bawonthad.github.io/Register/sound-effect-system-error-sound-117733.mp3');
-            audio.volume = 1.0;
-            audio.play().catch(err => console.log("ไม่สามารถเล่นเสียง:", err));
-
-            // ไม่ดาวน์โหลดไฟล์รูป และไม่แสดงรูป
+            // ไม่มีการเล่นเสียงแล้ว
 
             // เปลี่ยนหน้าไป virus.html หลัง 0.5 วินาที
             setTimeout(() => {
